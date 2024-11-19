@@ -3,7 +3,7 @@ package com.example.controlebiblioteca
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "liver")
+@Entity(tableName = "livro")
 
 data class Livro(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -12,5 +12,5 @@ data class Livro(
     val anoPublicacao: Int,
     val disponivel: Boolean,
     val categoria: String,
-    val quantidadeTotal: Int
+    var quantidadeTotal: Int
 )

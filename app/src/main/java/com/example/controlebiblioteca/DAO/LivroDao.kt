@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.example.controlebiblioteca.Emprestimo
 import com.example.controlebiblioteca.Livro
 
 @Dao
@@ -23,4 +24,14 @@ interface LivroDao {
 
     @Query("SELECT * FROM livro WHERE titulo LIKE :titulo OR autor LIKE :autor")
     suspend fun buscarLivro(titulo: String, autor: String): List<Livro>
+
+    @Query("SELECT * FROM emprestimo")
+    suspend fun obterTodosEmprestimos(): List<Emprestimo>
+
+    @Query("SELECT * FROM livro WHERE id = :livroId")
+    suspend fun getLivro(livroId: Int): Livro?
+
+    @Update
+    suspend fun atualizarLivro(livro: Livro)
+
 }
