@@ -22,7 +22,6 @@ class LivroViewModel : ViewModel() {
                 quantidadeTotal = livros[livroIndex].quantidadeTotal - 1,
                 disponivel = livros[livroIndex].quantidadeTotal - 1 > 0
             )
-            livros[livroIndex] = livroEmprestado // Atualiza o livro na lista
         }
     }
 }
