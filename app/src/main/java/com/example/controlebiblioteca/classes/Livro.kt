@@ -1,4 +1,4 @@
-package com.example.controlebiblioteca
+package com.example.controlebiblioteca.classes
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,7 +10,7 @@ data class Livro(
     val titulo: String,
     val autor: String,
     val anoPublicacao: Int,
-    val disponivel: Boolean,
+    var disponivel: Boolean,
     val categoria: String,
     var quantidadeTotal: Int
 )

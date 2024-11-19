@@ -5,33 +5,21 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.controlebiblioteca.Emprestimo
-import com.example.controlebiblioteca.Livro
+import com.example.controlebiblioteca.classes.Emprestimo
+import com.example.controlebiblioteca.classes.Livro
 
 @Dao
 interface LivroDao {
+
     @Insert
-    suspend fun inserir(livro: Livro)
-
-    @Update
-    suspend fun atualizar(livro: Livro)
-
-    @Delete
-    suspend fun deletar(livro: Livro)
-
-    @Query("SELECT * FROM livro")
-    suspend fun obterTodos(): List<Livro>
-
-    @Query("SELECT * FROM livro WHERE titulo LIKE :titulo OR autor LIKE :autor")
-    suspend fun buscarLivro(titulo: String, autor: String): List<Livro>
-
-    @Query("SELECT * FROM emprestimo")
-    suspend fun obterTodosEmprestimos(): List<Emprestimo>
-
-    @Query("SELECT * FROM livro WHERE id = :livroId")
-    suspend fun getLivro(livroId: Int): Livro?
+    suspend fun inserirLivro(livro: Livro)
 
     @Update
     suspend fun atualizarLivro(livro: Livro)
 
+    @Query("SELECT * FROM livro")
+    suspend fun obterLivros(): List<Livro>
+
+    @Query("SELECT * FROM livro WHERE id = :id")
+    suspend fun obterLivroPorId(id: Int): Livro?
 }

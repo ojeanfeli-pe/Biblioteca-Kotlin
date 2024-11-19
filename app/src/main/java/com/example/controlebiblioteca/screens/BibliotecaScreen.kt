@@ -1,120 +1,71 @@
-package com.example.controlebiblioteca
-
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelProvider
+import com.example.controlebiblioteca.ui.theme.ControleBibliotecaTheme
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.DropdownMenuItem
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.controlebiblioteca.classes.Livro
+import com.example.controlebiblioteca.classes.Usuario
 
-class BibliotecaScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            BibliotecaScreenContent()
-        }
-    }
 
-    @Composable
-    fun BibliotecaScreenContent() {
-        val livroViewModel = ViewModelProvider(this).get(LivroViewModel::class.java)
-        val usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
-        val emprestimoViewModel = ViewModelProvider(this).get(EmprestimoViewModel::class.java)
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BibliotecaScreen(
+    livroViewModel: LivroViewModel = viewModel(),
+    usuarioViewModel: UsuarioViewModel = viewModel(),
+    onLivroSelecionado: (Livro) -> Unit
+) {
+    val livros = livroViewModel.livros
 
-        // Variáveis para controle de input
-        var livroTitulo by remember { mutableStateOf("") }
-        var livroAutor by remember { mutableStateOf("") }
-        var livroAno by remember { mutableStateOf("") }
-        var livroCategoria by remember { mutableStateOf("") }
-        var livroQuantidade by remember { mutableStateOf("") }
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(text = "Bem-vindo à Biblioteca!")
 
-        var usuarioNome by remember { mutableStateOf("") }
-        var usuarioEmail by remember { mutableStateOf("") }
+        Spacer(modifier = Modifier.height(16.dp))
 
-        var emprestimoLivroId by remember { mutableStateOf("") }
-        var emprestimoUsuarioId by remember { mutableStateOf("") }
+        Text(text = "Livros Disponíveis para Empréstimo")
 
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text("Adicionar Livro")
-            TextField(value = livroTitulo, onValueChange = { livroTitulo = it }, label = { Text("Título") })
-            TextField(value = livroAutor, onValueChange = { livroAutor = it }, label = { Text("Autor") })
-            TextField(value = livroAno, onValueChange = { livroAno = it }, label = { Text("Ano de Publicação") })
-            TextField(value = livroCategoria, onValueChange = { livroCategoria = it }, label = { Text("Categoria") })
-            TextField(value = livroQuantidade, onValueChange = { livroQuantidade = it }, label = { Text("Quantidade Total") })
-
-            Button(onClick = {
-                if (livroTitulo.isNotBlank() && livroAutor.isNotBlank() && livroAno.isNotBlank() && livroQuantidade.isNotBlank()) {
-                    val livro = Livro(
-                        titulo = livroTitulo,
-                        autor = livroAutor,
-                        anoPublicacao = livroAno.toInt(),
-                        categoria = livroCategoria,
-                        quantidadeTotal = livroQuantidade.toInt(),
-                        disponivel = true
-                    )
-                    livroViewModel.adicionarLivro(livro)
-                    Toast.makeText(this@BibliotecaScreen, "Livro Adicionado!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@BibliotecaScreen, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                Text("Salvar Livro")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text("Adicionar Usuário")
-            TextField(value = usuarioNome, onValueChange = { usuarioNome = it }, label = { Text("Nome") })
-            TextField(value = usuarioEmail, onValueChange = { usuarioEmail = it }, label = { Text("Email") })
-
-            Button(onClick = {
-                if (usuarioNome.isNotBlank() && usuarioEmail.isNotBlank()) {
-                    val usuario = Usuario(
-                        nome = usuarioNome,
-                        email = usuarioEmail,
-                        telefone = null,
-                        tipoUsuario = "funcionario", // Ajuste conforme necessário
-                        dataCadastro = "2024-11-01"
-                    )
-                    usuarioViewModel.adicionarUsuario(usuario)
-                    Toast.makeText(this@BibliotecaScreen, "Usuário Adicionado!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@BibliotecaScreen, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                Text("Salvar Usuário")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text("Registrar Empréstimo")
-            TextField(value = emprestimoLivroId, onValueChange = { emprestimoLivroId = it }, label = { Text("Livro ID") })
-            TextField(value = emprestimoUsuarioId, onValueChange = { emprestimoUsuarioId = it }, label = { Text("Usuário ID") })
-
-            Button(onClick = {
-                if (emprestimoLivroId.isNotBlank() && emprestimoUsuarioId.isNotBlank()) {
-                    val emprestimo = Emprestimo(
-                        dataEmprestimo = "2024-11-01",
-                        dataDevolucao = "2024-11-10",  // Ajuste conforme necessário
-                        livroId = emprestimoLivroId.toInt(),
-                        usuarioId = emprestimoUsuarioId.toInt(),
-                        status = "EMPRESTADO"
-                    )
-                    emprestimoViewModel.adicionarEmprestimo(emprestimo)
-                    Toast.makeText(this@BibliotecaScreen, "Empréstimo Registrado!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this@BibliotecaScreen, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                Text("Salvar Empréstimo")
+        LazyColumn {
+            items(livros) { livro ->
+                LivroItem(livro = livro, onClick = { onLivroSelecionado(livro) })
             }
         }
     }
 }
+
+@Composable
+fun LivroItem(livro: Livro, onClick: () -> Unit) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        Text(text = "Título: ${livro.titulo}")
+        Text(text = "Autor: ${livro.autor}")
+        Text(text = "Ano: ${livro.anoPublicacao}")
+
+        val disponibilidade = if (livro.disponivel) "Disponível" else "Emprestado"
+        Text(text = "Status: $disponibilidade, ${livro.quantidadeTotal}", color = if (livro.disponivel) Color.Green else Color.Red)
+
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (livro.disponivel) {
+            Button(onClick = onClick) {
+                Text(text = "Selecionar para Emprestar")
+            }
+        } else {
+            Text(text = "Livro não disponível", color = Color.Red)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+

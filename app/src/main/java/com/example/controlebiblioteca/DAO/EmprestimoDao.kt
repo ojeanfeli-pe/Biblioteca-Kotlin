@@ -5,8 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.controlebiblioteca.Emprestimo
-import com.example.controlebiblioteca.Livro
+import com.example.controlebiblioteca.classes.Emprestimo
+import com.example.controlebiblioteca.classes.Livro
 
 @Dao
 interface EmprestimoDao {

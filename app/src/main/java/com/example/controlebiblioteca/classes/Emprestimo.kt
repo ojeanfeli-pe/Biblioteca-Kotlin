@@ -1,4 +1,4 @@
-package com.example.controlebiblioteca
+package com.example.controlebiblioteca.classes
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -7,6 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.controlebiblioteca.DAO.EmprestimoDao
 import com.example.controlebiblioteca.DAO.LivroDao
 import com.example.controlebiblioteca.DAO.UsuarioDao
+import com.example.controlebiblioteca.classes.Emprestimo
+import com.example.controlebiblioteca.classes.Livro
+import com.example.controlebiblioteca.classes.Usuario
 
 @Database(entities = [Livro::class, Usuario::class, Emprestimo::class], version = 1)
 abstract class BibliotecaDatabase : RoomDatabase() {
