@@ -1,5 +1,6 @@
 package com.example.controlebiblioteca.screens
 
+import EmprestimoViewModel
 import LivroViewModel
 import UsuarioViewModel
 import android.os.Bundle
@@ -29,6 +30,7 @@ fun EmprestimoScreen(
     livro: Livro,
     livroViewModel: LivroViewModel = viewModel(),
     usuarioViewModel: UsuarioViewModel = viewModel(),
+    emprestimoViewModel: EmprestimoViewModel = viewModel(),
     onEmprestimoConcluido: () -> Unit
 ) {
     var usuarioSelecionado by remember { mutableStateOf<Usuario?>(null) }
@@ -64,6 +66,8 @@ fun EmprestimoScreen(
                     // Atualiza o livro e marca como emprestado
                     livroViewModel.emprestarLivro(livro)
                     mensagem = "Empréstimo realizado com sucesso para ${usuarioSelecionado?.nome}!"
+                    emprestimoViewModel.emprestarLivro(livro,
+                        usuarioSelecionado!!, dataEmprestimo = "21/11", dataDevolucao = "22/11")
                     onEmprestimoConcluido() // Volta para a tela anterior ou outra ação
                 } else {
                     mensagem = "Livro não disponível para empréstimo!"
