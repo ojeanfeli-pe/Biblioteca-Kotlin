@@ -21,6 +21,7 @@ import com.example.controlebiblioteca.ui.theme.ControleBibliotecaTheme
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.controlebiblioteca.classes.Livro
 import com.example.controlebiblioteca.classes.Usuario
 
@@ -30,7 +31,8 @@ fun EmprestimoScreen(
     livro: Livro,
     onEmprestimoConcluido: () -> Unit,
     usuarioViewModel: UsuarioViewModel = viewModel(),
-    emprestimoViewModel: EmprestimoViewModel = viewModel()
+    emprestimoViewModel: EmprestimoViewModel = viewModel(),
+    navController: NavController
 ) {
     var usuarioSelecionado by remember { mutableStateOf<Usuario?>(null) }
     var mensagem by remember { mutableStateOf("") }

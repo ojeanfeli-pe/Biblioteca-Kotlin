@@ -1,48 +1,54 @@
-package com.example.controlebiblioteca
-
-import BibliotecaScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.controlebiblioteca.classes.Livro
 import com.example.controlebiblioteca.screens.AdicionarLivroScreen
 import com.example.controlebiblioteca.screens.EmprestimoScreen
-import com.example.controlebiblioteca.screens.TelaPrincipal
+import com.example.controlebiblioteca.screens.HomeScreen
 import com.example.controlebiblioteca.ui.theme.ControleBibliotecaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ControleBibliotecaTheme {
-                BibliotecaApp()
-            }
+            BibliotecaApp()
         }
     }
 }
 
 @Composable
 fun BibliotecaApp() {
-    val navController = rememberNavController()
+    val navController = rememberNavController() // Cria o NavController
     NavHost(navController = navController, startDestination = "tela_principal") {
-        composable("tela_principal") { TelaPrincipal( onNavigateAdicionarLivro = { navController.navigate("adicionarLivro") },
-            onNavigateEmprestar = { navController.navigate("biblioteca") }) }
-        composable("adicionarLivro") { AdicionarLivroScreen( onLivroAdicionado = { navController.popBackStack() }) }
-        composable("biblioteca") { backStackEntry ->
-            val livroId = backStackEntry.arguments?.getString("livroId")
-            if (livroId != null) {
-                // Lógica para buscar ou navegar com livroId
-            } else {
-                Text("Erro: ID do livro não encontrado.")
-            }
+        // Tela Principal
+        composable("tela_principal") {
+            HomeScreen(
+                onNavigateAdicionarLivro = { navController.navigate("adicionar_livro") },
+                onNavigateEmprestar = { navController.navigate("emprestimo") },
+            )
         }
-    }
-}
+
+        // Tela de Adicionar Livro
+        composable("adicionar_livro") {
+            AdicionarLivroScreen(
+                onLivroAdicionado = { navController.popBackStack() } // Volta para a tela anterior
+            )
+        }
+
+        // Tela de Empréstimo
+        // Tela de Empréstimo
+        composable("emprestimo/{livro}") { backStackEntry ->
+            val livro = backStackEntry.arguments?.getString("livro") // Obtendo o parâmetro
+            EmprestimoScreen(
+                livro = livro,
+                navController = navController, // Passando o NavController corretamente
+                onEmprestimoConcluido = {
+                    navController.popBackStack()
+                }
+            )
+        }
+    }}
 

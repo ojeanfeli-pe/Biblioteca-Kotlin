@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TelaPrincipal(
+fun HomeScreen(
     onNavigateAdicionarLivro: () -> Unit,
     onNavigateEmprestar: () -> Unit
 ) {
@@ -21,7 +21,6 @@ fun TelaPrincipal(
     ) {
         Text(
             text = "Bem-vindo à Biblioteca!",
-            style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -33,7 +32,6 @@ fun TelaPrincipal(
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-
         Button(
             onClick = onNavigateEmprestar,
             modifier = Modifier.fillMaxWidth()
@@ -42,4 +40,3 @@ fun TelaPrincipal(
         }
     }
 }
-
