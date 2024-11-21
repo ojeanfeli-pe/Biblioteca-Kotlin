@@ -19,5 +19,5 @@ interface UsuarioDao {
     suspend fun deletar(usuario: Usuario)
 
     @Query("SELECT * FROM usuario")
-    suspend fun obterTodos(): List<Usuario>
+    suspend fun listarUsuarios(): List<Usuario>
 }

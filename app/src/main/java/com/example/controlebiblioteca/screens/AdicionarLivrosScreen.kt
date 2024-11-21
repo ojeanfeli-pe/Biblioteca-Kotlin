@@ -18,6 +18,7 @@ fun AdicionarLivroScreen(
     var autor by remember { mutableStateOf("") }
     var anoPublicacao by remember { mutableStateOf("") }
     var quantidadeTotal by remember { mutableStateOf("") }
+    var mensagemErro by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -34,21 +35,32 @@ fun AdicionarLivroScreen(
         TextField(value = quantidadeTotal, onValueChange = { quantidadeTotal = it }, label = { Text("Quantidade Total") })
         Spacer(modifier = Modifier.height(16.dp))
 
+        if (mensagemErro.isNotEmpty()) {
+            Text(text = mensagemErro)
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
         Button(onClick = {
-            livroViewModel.livros.add(
-                Livro(
+            val ano = anoPublicacao.toIntOrNull()
+            val quantidade = quantidadeTotal.toIntOrNull()
+            if (titulo.isEmpty() || autor.isEmpty() || ano == null || quantidade == null) {
+                mensagemErro = "Preencha todos os campos corretamente!"
+            } else {
+                val livro = Livro(
                     id = livroViewModel.livros.size + 1,
                     titulo = titulo,
                     autor = autor,
-                    anoPublicacao = anoPublicacao.toIntOrNull() ?: 0,
+                    anoPublicacao = ano,
                     disponivel = true,
                     categoria = "Gênero Padrão",
-                    quantidadeTotal = quantidadeTotal.toIntOrNull() ?: 1
+                    quantidadeTotal = quantidade
                 )
-            )
-            onLivroAdicionado()
+                livroViewModel.adicionarLivro(livro)
+                onLivroAdicionado()
+            }
         }) {
             Text("Adicionar Livro")
         }
     }
 }
+

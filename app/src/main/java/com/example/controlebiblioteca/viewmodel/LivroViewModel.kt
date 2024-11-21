@@ -3,30 +3,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controlebiblioteca.classes.Livro
 import kotlinx.coroutines.launch
+import com.example.controlebiblioteca.Repositorio.LivroRepository
 
-class LivroViewModel : ViewModel() {
+
+class LivroViewModel(private val repository: LivroRepository, livro: Livro) : ViewModel() {
     var livros = mutableStateListOf<Livro>()
 
     init {
-        // Adicionando livros de exemplo
-        livros.add(Livro(1, "Livro Exemplo", "Autor Exemplo", 2020, true, "Ficção", 10))
-        livros.add(Livro(2, "Outro Livro", "Outro Autor", 2018, true, "Aventura", 5))
+        carregarLivros()
     }
 
-    // Função para emprestar um livro
-    fun emprestarLivro(livro: Livro) {
-        val livroIndex = livros.indexOfFirst { it.id == livro.id }
-        if (livroIndex != -1 && livros[livroIndex].quantidadeTotal > 0) {
-            // Atualiza a quantidade e a disponibilidade
-            val livroEmprestado = livros[livroIndex].copy(
-                quantidadeTotal = livros[livroIndex].quantidadeTotal - 1,
-                disponivel = livros[livroIndex].quantidadeTotal - 1 > 0
-            )
+    fun adicionarLivro(livro: Livro) {
+        viewModelScope.launch {
+            repository.adicionarLivro(livro)
+            carregarLivros() // Atualiza a lista de livros após adicionar
+        }
+    }
+
+    private fun carregarLivros() {
+        viewModelScope.launch {
+            livros.clear()
+            livros.addAll(repository.buscarLivros())
         }
     }
 }
-
-
-
-
-

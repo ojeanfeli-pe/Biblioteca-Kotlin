@@ -18,8 +18,8 @@ class EmprestimoViewModel(application: Application) : AndroidViewModel(applicati
 
     init {
         viewModelScope.launch {
-            livros.addAll(livroDao.obterLivros())
-            usuarios.addAll(usuarioDao.obterTodos())
+            livros.addAll(livroDao.listarLivros())
+            usuarios.addAll(usuarioDao.listarUsuarios())
         }
     }
 

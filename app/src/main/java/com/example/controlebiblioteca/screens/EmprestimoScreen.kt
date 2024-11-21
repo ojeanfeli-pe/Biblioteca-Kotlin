@@ -28,10 +28,9 @@ import com.example.controlebiblioteca.classes.Usuario
 @Composable
 fun EmprestimoScreen(
     livro: Livro,
-    livroViewModel: LivroViewModel = viewModel(),
+    onEmprestimoConcluido: () -> Unit,
     usuarioViewModel: UsuarioViewModel = viewModel(),
-    emprestimoViewModel: EmprestimoViewModel = viewModel(),
-    onEmprestimoConcluido: () -> Unit
+    emprestimoViewModel: EmprestimoViewModel = viewModel()
 ) {
     var usuarioSelecionado by remember { mutableStateOf<Usuario?>(null) }
     var mensagem by remember { mutableStateOf("") }
@@ -61,14 +60,10 @@ fun EmprestimoScreen(
 
         if (usuarioSelecionado != null) {
             Button(onClick = {
-                // Verifica se o livro está disponível
                 if (livro.disponivel && livro.quantidadeTotal > 0) {
-                    // Atualiza o livro e marca como emprestado
-                    livroViewModel.emprestarLivro(livro)
-                    mensagem = "Empréstimo realizado com sucesso para ${usuarioSelecionado?.nome}!"
-                    emprestimoViewModel.emprestarLivro(livro,
-                        usuarioSelecionado!!, dataEmprestimo = "21/11", dataDevolucao = "22/11")
-                    onEmprestimoConcluido() // Volta para a tela anterior ou outra ação
+                    emprestimoViewModel.emprestarLivro(livro, usuarioSelecionado!!, dataEmprestimo = "21/11", dataDevolucao = "22/11")
+                    mensagem = "Empréstimo realizado com sucesso para {$usuarioSelecionado.nome}!"
+                    onEmprestimoConcluido()
                 } else {
                     mensagem = "Livro não disponível para empréstimo!"
                 }
@@ -77,12 +72,6 @@ fun EmprestimoScreen(
             }
         } else {
             Text("Selecione um usuário para realizar o empréstimo.", color = Color.Red)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (mensagem.isNotEmpty()) {
-            Text(text = mensagem, color = Color.Green)
         }
     }
 }

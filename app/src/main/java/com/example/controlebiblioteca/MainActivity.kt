@@ -4,6 +4,7 @@ import BibliotecaScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,38 +32,17 @@ class MainActivity : ComponentActivity() {
 fun BibliotecaApp() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "tela_principal") {
-        composable("tela_principal") {
-            TelaPrincipal(
-                onNavigateAdicionarLivro = { navController.navigate("adicionar_livro") },
-                onNavigateEmprestar = { navController.navigate("biblioteca") },
-            )
-        }
-        composable("adicionar_livro") {
-            AdicionarLivroScreen(
-                onLivroAdicionado = { navController.popBackStack() }
-            )
-        }
-        composable("emprestimo") {
-            val livro = Livro(
-                id = 1,
-                titulo = "Livro Exemplo",
-                autor = "Autor Exemplo",
-                anoPublicacao = 2020,
-                disponivel = true,
-                categoria = "Ficção",
-                quantidadeTotal = 10
-            )
-            EmprestimoScreen(
-                livro = livro,
-                onEmprestimoConcluido = { navController.popBackStack() }
-            )
-        }
-        composable("biblioteca") {
-            BibliotecaScreen(
-                onLivroSelecionado = { livro ->
-                    navController.navigate("emprestimo")
-                }
-            )
+        composable("tela_principal") { TelaPrincipal( onNavigateAdicionarLivro = { navController.navigate("adicionarLivro") },
+            onNavigateEmprestar = { navController.navigate("biblioteca") }) }
+        composable("adicionarLivro") { AdicionarLivroScreen( onLivroAdicionado = { navController.popBackStack() }) }
+        composable("biblioteca") { backStackEntry ->
+            val livroId = backStackEntry.arguments?.getString("livroId")
+            if (livroId != null) {
+                // Lógica para buscar ou navegar com livroId
+            } else {
+                Text("Erro: ID do livro não encontrado.")
+            }
         }
     }
 }
+
