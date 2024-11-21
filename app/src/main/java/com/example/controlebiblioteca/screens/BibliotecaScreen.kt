@@ -26,11 +26,11 @@ fun BibliotecaScreen(
 
         Text(text = "Livros Disponíveis para Empréstimo")
 
-        LazyColumn {
-            items(livros) { livro ->
-                LivroItem(livro = livro, onClick = { onLivroSelecionado(livro) })
-            }
-        }
+//        LazyColumn {
+//            items(livros) { livro ->
+//                LivroItem(livro = livro, onClick = { onLivroSelecionado(livro) })
+//            }
+//        }
     }
 }
 
@@ -40,7 +40,6 @@ fun LivroItem(livro: Livro, onClick: () -> Unit) {
         Text(text = "Título: ${livro.titulo}")
         Text(text = "Autor: ${livro.autor}")
         Text(text = "Ano: ${livro.anoPublicacao}")
-
         val disponibilidade = if (livro.disponivel) "Disponível" else "Emprestado"
         Text(text = "Status: $disponibilidade, ${livro.quantidadeTotal}", color = if (livro.disponivel) Color.Green else Color.Red)
 
