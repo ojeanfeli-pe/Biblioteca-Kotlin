@@ -6,9 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.controlebiblioteca.classes.Usuario
 
 @Composable
 fun HomeScreen(
+    onNavigateAdicionarUsuario: () -> Unit,
     onNavigateAdicionarLivro: () -> Unit,
     onNavigateEmprestar: () -> Unit,
     onNavigateRelatorios: () -> Unit
@@ -25,6 +27,16 @@ fun HomeScreen(
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(32.dp))
+
+        Button(
+            onNavigateAdicionarUsuario,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Cadastrar Usuarios")
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
 
         Button(
             onClick = onNavigateAdicionarLivro,

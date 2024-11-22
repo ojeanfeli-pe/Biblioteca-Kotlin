@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.controlebiblioteca.screens.EmprestimoScreen
 import com.example.controlebiblioteca.screens.GerenciamentoDeLivrosScreen
+import com.example.controlebiblioteca.screens.GerenciamentoDeUsuariosScreen
 import com.example.controlebiblioteca.screens.HomeScreen
 import com.example.controlebiblioteca.screens.RelatoriosScreen
 
@@ -27,10 +28,18 @@ fun MainScreen() {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
+                onNavigateAdicionarUsuario = { navController.navigate("adicionarUsuario") },
                 onNavigateAdicionarLivro = { navController.navigate("adicionarLivro") },
                 onNavigateEmprestar = { navController.navigate("emprestimos") },
                 onNavigateRelatorios = { navController.navigate("relatorios") }
             )
+        }
+        composable("adicionarUsuario") {
+            GerenciamentoDeUsuariosScreen (onVoltar = {
+                navController.navigate("home") {
+                    popUpTo("adicionarUsuario") { inclusive = true }
+                }
+            })
         }
         composable("adicionarLivro") {
             GerenciamentoDeLivrosScreen(onVoltar = {
