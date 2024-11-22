@@ -13,7 +13,7 @@ import com.example.controlebiblioteca.classes.Livro
 interface LivroDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun inserirLivro(livro: Livro)
+    suspend fun inserirLivro(livro: Livro): Long // Retorna o ID do livro inserido
 
     @Update
     suspend fun atualizarLivro(livro: Livro)
@@ -22,9 +22,11 @@ interface LivroDao {
     suspend fun deletarLivro(livro: Livro)
 
     @Query("SELECT * FROM livro")
-    suspend fun listarLivros():List<Livro>
+    suspend fun listarLivros(): List<Livro>
 
-    // A função agora recebe e retorna Long
     @Query("SELECT * FROM livro WHERE id = :id")
     suspend fun obterLivroPorId(id: Long): Livro?
+
+    @Query("SELECT * FROM livro WHERE titulo LIKE :query OR autor LIKE :query")
+    suspend fun buscarLivros(query: String): List<Livro>
 }

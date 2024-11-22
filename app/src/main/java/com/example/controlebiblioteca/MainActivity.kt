@@ -6,9 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.controlebiblioteca.screens.AdicionarLivroScreen
 import com.example.controlebiblioteca.screens.EmprestimoScreen
+import com.example.controlebiblioteca.screens.GerenciamentoDeLivrosScreen
 import com.example.controlebiblioteca.screens.HomeScreen
+import com.example.controlebiblioteca.screens.RelatoriosScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,11 +28,12 @@ fun MainScreen() {
         composable("home") {
             HomeScreen(
                 onNavigateAdicionarLivro = { navController.navigate("adicionarLivro") },
-                onNavigateEmprestar = { navController.navigate("emprestimos") }
+                onNavigateEmprestar = { navController.navigate("emprestimos") },
+                onNavigateRelatorios = { navController.navigate("relatorios") }
             )
         }
         composable("adicionarLivro") {
-            AdicionarLivroScreen(onLivroAdicionado = {
+            GerenciamentoDeLivrosScreen(onVoltar = {
                 navController.navigate("home") {
                     popUpTo("adicionarLivro") { inclusive = true }
                 }
@@ -40,7 +42,9 @@ fun MainScreen() {
         composable("emprestimos") {
             EmprestimoScreen(onVoltar = { navController.navigate("home") })
         }
+        composable("relatorios") {
+            RelatoriosScreen(onVoltar = { navController.navigate("home") })
+        }
     }
 }
-
 

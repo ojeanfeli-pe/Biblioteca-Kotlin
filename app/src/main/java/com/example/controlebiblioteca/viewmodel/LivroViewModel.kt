@@ -21,25 +21,55 @@ class LivroViewModel(application: Application) : AndroidViewModel(application) {
         carregarLivros() // Carrega a lista de livros ao inicializar
     }
 
+    // Carregar livros do banco de dados
     fun carregarLivros() {
         viewModelScope.launch {
-
-            val listaLivros = withContext(Dispatchers.IO){// Atualiza o LiveData com os livros do banco
-                livroDao.listarLivros()
+            val listaLivros = withContext(Dispatchers.IO) {
+                livroDao.listarLivros() // Esse método no DAO deve retornar uma lista de livros
             }
-            // Atualização da LiveData na thread principal
             _livros.value = listaLivros
         }
     }
 
+    // Adicionar um novo livro
     fun adicionarLivro(livro: Livro) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                livroDao.inserirLivro(livro) // Insere o livro no banco de dados
-                carregarLivros() // Recarrega a lista após a inserção
+                livroDao.inserirLivro(livro)
             }
+            carregarLivros() // Atualiza a lista após a inserção
         }
+    }
 
+    // Editar um livro existente
+    fun editarLivro(livro: Livro) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                livroDao.atualizarLivro(livro)
+            }
+            carregarLivros() // Atualiza a lista após a edição
+        }
+    }
 
+    // Remover um livro
+    fun removerLivro(livro: Livro) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                livroDao.deletarLivro(livro)
+            }
+            carregarLivros() // Atualiza a lista após a remoção
+        }
+    }
+
+    // Buscar livros por título ou autor
+    fun buscarLivros(query: String): LiveData<List<Livro>> {
+        val resultados = MutableLiveData<List<Livro>>()
+        viewModelScope.launch {
+            val listaFiltrada = withContext(Dispatchers.IO) {
+                livroDao.buscarLivros("%$query%") // Buscar no banco de dados
+            }
+            resultados.postValue(listaFiltrada) // Atualiza os resultados da busca
+        }
+        return resultados
     }
 }
