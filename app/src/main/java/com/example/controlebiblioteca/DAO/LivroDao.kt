@@ -14,7 +14,13 @@ interface LivroDao {
     @Insert
     suspend fun inserirLivro(livro: Livro)
 
-    @Query("SELECT * FROM Livro")
+    @Update
+    suspend fun atualizarLivro(livro: Livro)
+
+    @Delete
+    suspend fun deletarLivro(livro: Livro)
+
+    @Query("SELECT * FROM livro")
     fun listarLivros(): List<Livro>
 
     @Query("SELECT * FROM livro WHERE id = :id")

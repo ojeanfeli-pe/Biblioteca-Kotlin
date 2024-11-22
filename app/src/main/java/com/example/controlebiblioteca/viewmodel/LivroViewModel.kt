@@ -31,3 +31,26 @@ class LivroViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 }
+
+//class LivroViewModel(application: Application) : AndroidViewModel(application) {
+//    private val livroDao = BibliotecaDatabase.getDatabase(application).livroDao()
+//    private val _livros = MutableLiveData<List<Livro>>() // LiveData para observar a lista de livros
+//    val livros: LiveData<List<Livro>> get() = _livros
+//
+//    init {
+//        carregarLivros() // Carrega a lista de livros ao inicializar
+//    }
+//
+//    fun carregarLivros() {
+//        viewModelScope.launch {
+//            _livros.value = livroDao.listarLivros() // Atualiza o LiveData com os livros do banco
+//        }
+//    }
+//
+//    fun adicionarLivro(livro: Livro) {
+//        viewModelScope.launch {
+//            livroDao.inserirLivro(livro) // Insere o livro no banco de dados
+//            carregarLivros() // Atualiza a lista após adicionar
+//        }
+//    }
+//}

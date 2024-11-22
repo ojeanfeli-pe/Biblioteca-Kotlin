@@ -9,7 +9,7 @@ data class Livro(
     val titulo: String,
     val autor: String,
     val anoPublicacao: Int,
-    var disponivel: Boolean,
+    var disponivel: Boolean = true, //Valor padrão definido como true
     val categoria: String,
     var quantidadeTotal: Int
 )

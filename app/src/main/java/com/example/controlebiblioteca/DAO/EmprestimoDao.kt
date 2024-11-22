@@ -15,11 +15,10 @@ interface EmprestimoDao {
     suspend fun inserir(emprestimo: Emprestimo)
 
     @Update
-    suspend fun atualizar(emprestimo: Livro)
+    suspend fun atualizar(emprestimo: Emprestimo)
 
     @Delete
     suspend fun deletar(emprestimo: Emprestimo)
-
 
     @Query("SELECT * FROM emprestimo WHERE livroId = :livroId AND status = 'EMPRESTADO'")
     suspend fun obterEmprestimosAtivosPorLivro(livroId: Int): List<Emprestimo>

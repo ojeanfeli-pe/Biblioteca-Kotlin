@@ -1,4 +1,4 @@
-package com.example.controlebiblioteca // Certifique-se de que este é o pacote correto
+package com.example.controlebiblioteca
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,7 +11,6 @@ import com.example.controlebiblioteca.screens.AdicionarLivroScreen
 import com.example.controlebiblioteca.screens.EmprestimoScreen
 import com.example.controlebiblioteca.screens.HomeScreen
 import com.example.controlebiblioteca.ui.theme.ControleBibliotecaTheme
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,22 +25,47 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "adicionarLivro") {
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen(
+                onNavigateAdicionarLivro = { navController.navigate("adicionarLivro") },
+                onNavigateEmprestar = { navController.navigate("emprestimos") }
+            )
+        }
         composable("adicionarLivro") {
             AdicionarLivroScreen(onLivroAdicionado = {
-                // Navegar para a tela "home" após adicionar o livro
                 navController.navigate("home") {
-                    // Este código impede a navegação para a tela anterior quando você pressiona "voltar"
                     popUpTo("adicionarLivro") { inclusive = true }
                 }
             })
         }
-        composable("home") {
-            // Apenas uma tela de exemplo para "home"
-            Text("Tela Home")
+        composable("emprestimos") {
+            EmprestimoScreen(onVoltar = { navController.navigate("home") })
         }
     }
 }
+
+
+//@Composable
+//fun MainScreen() {
+//    val navController = rememberNavController()
+//
+//    NavHost(navController = navController, startDestination = "adicionarLivro") {
+//        composable("adicionarLivro") {
+//            AdicionarLivroScreen(onLivroAdicionado = {
+//                // Navegar para a tela "home" após adicionar o livro
+//                navController.navigate("home") {
+//                    // Este código impede a navegação para a tela anterior quando você pressiona "voltar"
+//                    popUpTo("adicionarLivro") { inclusive = true }
+//                }
+//            })
+//        }
+//        composable("home") {
+//            // Apenas uma tela de exemplo para "home"
+//            Text("Tela Home")
+//        }
+//    }
+//}
 
 
 
