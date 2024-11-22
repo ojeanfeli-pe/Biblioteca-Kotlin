@@ -103,8 +103,9 @@ fun EmprestimoScreen(
 
                     // Botão de devolução
                     Button(
-                        onClick = { devolverLivro(livro) },
-                        enabled = livro.quantidadeTotal < livro.quantidadeTotal // Verifica se a quantidade não excede o total
+                        onClick = { if (livro.quantidadeTotal < 1){
+                            devolverLivro(livro)
+                        } },                                // Verifica se a quantidade não excede o total
                     ) {
                         Text("Devolver")
                     }
