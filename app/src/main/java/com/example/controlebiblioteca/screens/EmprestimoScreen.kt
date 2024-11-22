@@ -34,16 +34,22 @@ fun EmprestimoScreen(
     // Observar os livros disponíveis
     val livros by livroViewModel.livros.observeAsState(emptyList())
 
+    // Mensagem de erro ou sucesso
+    var mensagem by remember { mutableStateOf("") }
+
     // Ação ao emprestar o livro
     fun emprestarLivro(livro: Livro) {
-        if (livro.disponivel) {
-            // Altere o estado de disponibilidade do livro (no modelo de dados)
-            val livroAtualizado = livro.copy(disponivel = false)
+        if (livro.quantidadeTotal > 0) {
+            // Atualiza o estado de disponibilidade do livro e quantidade
+            val livroAtualizado = livro.copy(
+                quantidadeTotal = livro.quantidadeTotal - 1, // Reduz a quantidade disponível
+                disponivel = livro.quantidadeTotal - 1 > 0 // Mantém a disponibilidade se houver mais exemplares
+            )
             livroViewModel.adicionarLivro(livroAtualizado) // Atualiza a lista de livros com a mudança
-            // Aqui, você pode chamar a lógica para registrar o empréstimo no banco de dados ou outras ações
+            mensagem = "Empréstimo realizado com sucesso!"
         } else {
-            // Mostre um erro ou uma mensagem de aviso caso o livro não esteja disponível
-            println("Livro não disponível para empréstimo.")
+            // Exibe mensagem de erro caso não haja exemplares disponíveis
+            mensagem = "Não há mais exemplares disponíveis."
         }
     }
 
@@ -56,15 +62,28 @@ fun EmprestimoScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Exibe mensagem de erro ou sucesso
+        if (mensagem.isNotEmpty()) {
+            Text(text = mensagem, color = if (mensagem.contains("não disponível")) Color.Red else Color.Green)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Lista dos livros disponíveis para empréstimo
         LazyColumn {
-            items(livros.filter { it.disponivel }) { livro ->
+            items(livros) { livro ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("${livro.titulo} - ${livro.autor}")
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("${livro.titulo} - ${livro.autor}")
+                        Text("Quantidade disponível: ${livro.quantidadeTotal}")
+                    }
+
+                    // Botão de empréstimo
                     Button(onClick = { emprestarLivro(livro) }) {
                         Text("Emprestar")
                     }

@@ -44,26 +44,3 @@ fun MainScreen() {
 }
 
 
-//@Composable
-//fun MainScreen() {
-//    val navController = rememberNavController()
-//
-//    NavHost(navController = navController, startDestination = "adicionarLivro") {
-//        composable("adicionarLivro") {
-//            AdicionarLivroScreen(onLivroAdicionado = {
-//                // Navegar para a tela "home" após adicionar o livro
-//                navController.navigate("home") {
-//                    // Este código impede a navegação para a tela anterior quando você pressiona "voltar"
-//                    popUpTo("adicionarLivro") { inclusive = true }
-//                }
-//            })
-//        }
-//        composable("home") {
-//            // Apenas uma tela de exemplo para "home"
-//            Text("Tela Home")
-//        }
-//    }
-//}
-
-
-
