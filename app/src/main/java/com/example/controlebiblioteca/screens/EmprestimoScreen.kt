@@ -85,7 +85,11 @@ fun EmprestimoScreen(
 
                     // Botão de empréstimo
                     Button(onClick = { emprestarLivro(livro) }) {
-                        Text("Emprestar")
+                        if(livro.disponivel == true)
+                            Text("Emprestar")
+
+                        else
+                            Text("Não Disponível", color = Color.Red)
                     }
                 }
             }
