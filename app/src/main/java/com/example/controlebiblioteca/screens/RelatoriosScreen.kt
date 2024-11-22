@@ -2,14 +2,24 @@ package com.example.controlebiblioteca.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.controlebiblioteca.viewmodels.RelatorioViewModel
 
 @Composable
-fun RelatoriosScreen(onVoltar: () -> Unit) {
+fun RelatoriosScreen(
+    relatorioViewModel: RelatorioViewModel = viewModel(),
+    onVoltar: () -> Unit
+) {
+    val relatorios by relatorioViewModel.relatorios.observeAsState(emptyList())
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,20 +32,18 @@ fun RelatoriosScreen(onVoltar: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(1) { // Simulação de relatórios; pode ser ajustado conforme os dados disponíveis
-                RelatorioItem(
-                    titulo = "Livros Mais Emprestados",
-                    detalhes = "1. O Senhor dos Anéis (10 vezes)\n2. Dom Quixote (8 vezes)"
-                )
-                RelatorioItem(
-                    titulo = "Total de Empréstimos",
-                    detalhes = "45 empréstimos realizados este mês."
-                )
-                RelatorioItem(
-                    titulo = "Usuários Ativos",
-                    detalhes = "20 usuários realizaram empréstimos."
-                )
+        if (relatorios.isEmpty()) {
+            Text(text = "Nenhum relatório disponível.", style = MaterialTheme.typography.bodyLarge)
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(relatorios) { relatorio ->
+                    RelatorioItem(
+                        titulo = "${relatorio.acao}: ${relatorio.livroTitulo}",
+                        detalhes = "Usuário: ${relatorio.usuarioNome}\nData: ${
+                            java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(relatorio.dataHora)
+                        }"
+                    )
+                }
             }
         }
 
@@ -45,6 +53,7 @@ fun RelatoriosScreen(onVoltar: () -> Unit) {
         }
     }
 }
+
 
 @Composable
 fun RelatorioItem(titulo: String, detalhes: String) {
