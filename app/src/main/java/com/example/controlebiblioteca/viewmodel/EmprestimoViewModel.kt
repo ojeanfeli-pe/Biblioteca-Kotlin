@@ -35,9 +35,14 @@ class EmprestimoViewModel(application: Application) : AndroidViewModel(applicati
                 status = "EMPRESTADO"
             )
             viewModelScope.launch {
+                // Inserir o empréstimo no banco de dados
                 emprestimoDao.inserir(emprestimo)
-                livro.disponivel = false // Marca o livro como não disponível
-                livroDao.inserirLivro(livro)
+
+                // Atualizar a disponibilidade do livro
+                livro.disponivel = false
+                livroDao.atualizarLivro(livro)  // Atualiza o livro (ao invés de inserir novamente)
+
+                // Mensagem de sucesso
                 mensagem.value = "Empréstimo realizado com sucesso para ${usuario.nome}!"
             }
         } else {
@@ -46,6 +51,7 @@ class EmprestimoViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 }
+
 
 //class EmprestimoViewModel(application: Application) : AndroidViewModel(application) {
 //    private val livroDao = BibliotecaDatabase.getDatabase(application).livroDao()

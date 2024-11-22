@@ -36,8 +36,10 @@ class LivroViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 livroDao.inserirLivro(livro) // Insere o livro no banco de dados
+                carregarLivros() // Recarrega a lista após a inserção
             }
-            carregarLivros() // Recarrega a lista após a inserção
         }
+
+
     }
 }
