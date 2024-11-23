@@ -19,4 +19,5 @@ class RelatorioViewModel(application: Application) : AndroidViewModel(applicatio
             relatorioDao.insert(relatorio)
         }
     }
+
 }

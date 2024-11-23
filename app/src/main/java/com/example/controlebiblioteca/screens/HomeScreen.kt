@@ -5,8 +5,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.controlebiblioteca.classes.Usuario
 
 @Composable
 fun HomeScreen(
@@ -26,10 +26,10 @@ fun HomeScreen(
 
         Text(
             text = "Bem-vindo ao Sistema de Biblioteca!",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onNavigateAdicionarUsuario,
@@ -38,7 +38,7 @@ fun HomeScreen(
             Text(text = "Cadastrar Usuarios")
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = onNavigateAdicionarLivro,

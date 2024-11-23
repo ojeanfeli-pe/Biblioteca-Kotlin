@@ -58,40 +58,4 @@ class LivroViewModel(application: Application) : AndroidViewModel(application) {
             carregarLivros() // Atualiza a lista após a remoção
         }
     }
-
-    // Emprestar um livro (marca o livro como não disponível)
-    fun emprestarLivro(livro: Livro) {
-        if (livro.disponivel) {
-            val livroAtualizado = livro.copy(disponivel = false)
-            viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    livroDao.atualizarLivro(livroAtualizado)
-                }
-                carregarLivros() // Atualiza a lista após a modificação
-            }
-        }
-    }
-
-    // Devolver um livro (marca o livro como disponível)
-    fun devolverLivro(livro: Livro) {
-        val livroAtualizado = livro.copy(disponivel = true)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                livroDao.atualizarLivro(livroAtualizado)
-            }
-            carregarLivros() // Atualiza a lista após a modificação
-        }
-    }
-
-    // Buscar livros por título ou autor
-    fun buscarLivros(query: String): LiveData<List<Livro>> {
-        val resultados = MutableLiveData<List<Livro>>()
-        viewModelScope.launch {
-            val listaFiltrada = withContext(Dispatchers.IO) {
-                livroDao.buscarLivros("%$query%") // Buscar no banco de dados
-            }
-            resultados.postValue(listaFiltrada) // Atualiza os resultados da busca
-        }
-        return resultados
-    }
 }
