@@ -21,7 +21,7 @@ import com.example.controlebiblioteca.viewmodels.RelatorioViewModel
 
 
 @Composable
-fun EmprestimoScreen(
+fun GerenciamentoDeEmprestimoScreen(
     livroViewModel: LivroViewModel = viewModel(),
     usuarioViewModel: UsuarioViewModel = viewModel(),
     relatorioViewModel: RelatorioViewModel = viewModel(),
@@ -88,6 +88,7 @@ fun EmprestimoScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
         Text(text = "Livros Disponíveis", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -136,6 +137,7 @@ fun EmprestimoScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = onVoltar, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Voltar")
         }

@@ -18,6 +18,7 @@ fun RelatoriosScreen(
     relatorioViewModel: RelatorioViewModel = viewModel(),
     onVoltar: () -> Unit
 ) {
+
     val relatorios by relatorioViewModel.relatorios.observeAsState(emptyList())
 
     Column(
@@ -26,10 +27,12 @@ fun RelatoriosScreen(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
             text = "Relatórios da Biblioteca",
             style = MaterialTheme.typography.headlineMedium
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         if (relatorios.isEmpty()) {
@@ -48,24 +51,29 @@ fun RelatoriosScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = onVoltar, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Voltar")
         }
     }
 }
 
-
 @Composable
 fun RelatorioItem(titulo: String, detalhes: String) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
+
         Column(modifier = Modifier.padding(16.dp)) {
+
             Text(text = titulo, style = MaterialTheme.typography.titleLarge)
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Text(text = detalhes, style = MaterialTheme.typography.bodyMedium)
         }
     }

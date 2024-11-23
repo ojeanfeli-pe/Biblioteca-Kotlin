@@ -15,6 +15,7 @@ fun HomeScreen(
     onNavigateEmprestar: () -> Unit,
     onNavigateRelatorios: () -> Unit
 ) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -22,10 +23,12 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         Text(
             text = "Bem-vindo ao Sistema de Biblioteca!",
             style = MaterialTheme.typography.headlineMedium
         )
+
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
@@ -37,13 +40,13 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-
         Button(
             onClick = onNavigateAdicionarLivro,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Gerenciar Livros")
         }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
@@ -52,6 +55,7 @@ fun HomeScreen(
         ) {
             Text(text = "Gerenciar Empréstimos")
         }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
@@ -62,38 +66,3 @@ fun HomeScreen(
         }
     }
 }
-
-
-//@Composable
-//fun HomeScreen(
-//    onNavigateAdicionarLivro: () -> Unit,
-//    onNavigateEmprestar: () -> Unit
-//) {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(
-//            text = "Bem-vindo à Biblioteca!",
-//        )
-//        Spacer(modifier = Modifier.height(32.dp))
-//
-//        Button(
-//            onClick = onNavigateAdicionarLivro,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text(text = "Adicionar Livros")
-//        }
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        Button(
-//            onClick = onNavigateEmprestar,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text(text = "Emprestar Livros")
-//        }
-//    }
-//}

@@ -22,6 +22,7 @@ fun GerenciamentoDeUsuariosScreen(
     usuarioViewModel: UsuarioViewModel = viewModel(),
     onVoltar: () -> Unit
 ) {
+
     var nomeBusca by remember { mutableStateOf("") }
     val usuarios by usuarioViewModel.usuarios.observeAsState(emptyList())
     val usuariosFiltrados = usuarios.filter { it.nome.contains(nomeBusca, ignoreCase = true) }
@@ -40,11 +41,13 @@ fun GerenciamentoDeUsuariosScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
         Text(
             text = "Gerenciamento de Usuários",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
@@ -53,6 +56,7 @@ fun GerenciamentoDeUsuariosScreen(
             label = { Text("Buscar por nome") },
             modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -65,11 +69,13 @@ fun GerenciamentoDeUsuariosScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = onVoltar, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Voltar")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
+
         Button(
             onClick = { mostrarAdicionarUsuarioDialog = true },
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -83,21 +89,27 @@ fun GerenciamentoDeUsuariosScreen(
             onDismissRequest = { mostrarAdicionarUsuarioDialog = false },
             title = { Text("Adicionar Usuário") },
             text = {
+
                 Column {
+
                     TextField(
                         value = nome,
                         onValueChange = { nome = it.trim() },
                         label = { Text("Nome") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     TextField(
                         value = email,
                         onValueChange = { email = it.trim() },
                         label = { Text("Email") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     TextField(
                         value = telefone,
                         onValueChange = { telefone = it.trim() },
@@ -105,13 +117,16 @@ fun GerenciamentoDeUsuariosScreen(
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone),
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     TextField(
                         value = tipoUsuario,
                         onValueChange = { tipoUsuario = it.trim() },
                         label = { Text("Tipo de Usuário (funcionario ou usuario)") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     if (erroCampos) {
                         Text(
                             "Por favor, preencha todos os campos obrigatórios.",
@@ -156,23 +171,27 @@ fun UsuarioItem(
     usuario: Usuario,
     onRemover: (Usuario) -> Unit
 ) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
+
         Row(
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = "Nome: ${usuario.nome}", style = MaterialTheme.typography.titleLarge)
                 Text(text = "Email: ${usuario.email}", style = MaterialTheme.typography.bodyMedium)
                 Text(text = "Tipo: ${usuario.tipoUsuario}", style = MaterialTheme.typography.bodySmall)
                 Text(text = "Telefone: ${usuario.telefone ?: "Não informado"}", style = MaterialTheme.typography.bodySmall)
             }
+
             IconButton(onClick = { onRemover(usuario) }) {
                 Icon(
                     imageVector = Icons.Default.Delete,

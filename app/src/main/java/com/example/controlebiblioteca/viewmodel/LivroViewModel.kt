@@ -1,9 +1,7 @@
 import android.app.Application
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controlebiblioteca.BibliotecaDatabase
 import com.example.controlebiblioteca.classes.Livro

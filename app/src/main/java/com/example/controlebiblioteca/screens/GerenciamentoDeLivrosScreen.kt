@@ -47,11 +47,13 @@ fun GerenciamentoDeLivrosScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
         Text(
             text = "Gerenciamento de Livros",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         TextField(
@@ -60,6 +62,7 @@ fun GerenciamentoDeLivrosScreen(
             label = { Text("Buscar por título ou autor") },
             modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(modifier = Modifier.weight(1f)) {
@@ -73,12 +76,14 @@ fun GerenciamentoDeLivrosScreen(
         }
 
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = onVoltar, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text("Voltar")
         }
 
-        // Botão para adicionar livro
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Botão para adicionar livro
         Button(
             onClick = { mostrarAdicionarLivroDialog = true },
             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -94,20 +99,25 @@ fun GerenciamentoDeLivrosScreen(
             title = { Text("Adicionar Livro") },
             text = {
                 Column {
+
                     TextField(
                         value = titulo,
                         onValueChange = { titulo = it.trim() },
                         label = { Text("Título") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     TextField(
                         value = autor,
                         onValueChange = { autor = it.trim() },
                         label = { Text("Autor") },
                         modifier = Modifier.fillMaxWidth()
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
+
                     TextField(
                         value = anoPublicacao,
                         onValueChange = {
@@ -172,29 +182,35 @@ fun LivroItem(
     onEditar: (Livro) -> Unit,
     onRemover: (Livro) -> Unit
 ) {
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
+
         Row(
             modifier = Modifier.padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = "Título: ${livro.titulo}", style = MaterialTheme.typography.titleLarge)
                 Text(text = "Autor: ${livro.autor}", style = MaterialTheme.typography.bodyMedium)
                 Text(text = "Ano: ${livro.anoPublicacao}", style = MaterialTheme.typography.bodySmall)
             }
+
             Row {
+
                 IconButton(onClick = { onEditar(livro) }) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = "Editar"
                     )
                 }
+
                 IconButton(onClick = { onRemover(livro) }) {
                     Icon(
                         imageVector = Icons.Default.Delete,
@@ -212,6 +228,7 @@ fun EditarLivroDialog(
     onSalvar: (Livro) -> Unit,
     onCancelar: () -> Unit
 ) {
+
     var titulo by remember { mutableStateOf(livro.titulo) }
     var autor by remember { mutableStateOf(livro.autor) }
     var anoPublicacao by remember { mutableStateOf(livro.anoPublicacao.toString()) }
@@ -228,14 +245,18 @@ fun EditarLivroDialog(
                     label = { Text("Título") },
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 TextField(
                     value = autor,
                     onValueChange = { autor = it.trim() },
                     label = { Text("Autor") },
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Spacer(modifier = Modifier.height(8.dp))
+
                 TextField(
                     value = anoPublicacao,
                     onValueChange = {
@@ -247,6 +268,7 @@ fun EditarLivroDialog(
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 if (erroAno) {
                     Text("Por favor, insira um ano válido.", color = MaterialTheme.colorScheme.error)
                 }
